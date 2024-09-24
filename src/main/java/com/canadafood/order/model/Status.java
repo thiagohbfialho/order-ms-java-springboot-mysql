@@ -2,12 +2,13 @@ package com.canadafood.order.model;
 
 public enum Status {
 
+    DONE,
     CANCELED,
     PAID,
     UNAUTHORIZED,
     AUTHORIZED,
     READY,
-    GONE,
+    OUT_FOR_DELIVERY,
     DELIVERED
 
 }
