@@ -6,6 +6,7 @@ import com.canadafood.order.service.OrderService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -40,18 +41,23 @@ public class OrderController {
         return ResponseEntity.created(uri).body(newOrderDto);
     }
 
-    @PutMapping("{id}/status")
+    @PutMapping("/{id}/status")
     public ResponseEntity<OrderDto> updateOrderStatus(@PathVariable Long id, @RequestBody StatusDto status) {
         OrderDto orderDto = orderService.updateStatus(id, status);
 
         return ResponseEntity.ok(orderDto);
     }
 
-    @PutMapping("{id}/paid")
+    @PutMapping("/{id}/paid")
     public ResponseEntity<Void> approvePayment(@PathVariable @NotNull Long id) {
         orderService.approveOrderPayment(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/port")
+    public String portReturn(@Value("${local.server.port}") String port){
+        return String.format("Request responded by instance running on the port %s", port);
     }
 
 }
